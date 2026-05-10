@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 576" width="1024" height="576" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="txtShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.6" result="thick"/>
+      <feGaussianBlur in="thick" stdDeviation="2.2" result="blur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.95" result="flood"/>
+      <feComposite in="flood" in2="blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <marker id="arr-w" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E2E8F0"/>
+    </marker>
+    <filter id="bash-glow"><feGaussianBlur stdDeviation="3"/></filter>
+    <style><![CDATA[
+      .title { font-weight: 700; font-size: 30px; fill: #FFFFFF; letter-spacing: -0.5px; }
+      .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+      .agent-label { font-size: 16px; fill: #FFFFFF; }
+      .bash-label  { font-weight: 700; font-size: 28px; fill: #FFFFFF; }
+      .chip-label  { font-size: 14px; fill: #FFFFFF; }
+      .surface-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; fill: #FFFFFF; letter-spacing: 0.5px; }
+
+      .agent-box { opacity: 0; animation: f 0.5s ease 0.1s forwards; }
+      .arr-main  { opacity: 0; stroke-dasharray: 220; stroke-dashoffset: 220; animation: drawFan 0.6s ease 0.5s forwards; }
+      .bash-box  { opacity: 0; transform: scale(.85); transform-box: fill-box; transform-origin: center; animation: pop 0.5s cubic-bezier(.2,.9,.3,1.4) 1.0s forwards; }
+      .bash-pulse { animation: bashPulse 2.2s ease-in-out 1.6s infinite; transform-box: fill-box; transform-origin: center; }
+      .surface-group { opacity: 0; animation: f 0.5s ease 1.3s forwards; }
+
+      /* Fan arrows: opacity gates the marker so it doesn't leak before the draw animation starts. */
+      .fan path { opacity: 0; stroke-dasharray: 360; stroke-dashoffset: 360; animation: drawFan 0.55s ease forwards; }
+      .fan .a1 { animation-delay: 1.45s; } .fan .a2 { animation-delay: 1.60s; }
+      .fan .a3 { animation-delay: 1.75s; } .fan .a4 { animation-delay: 1.90s; }
+      .fan .a5 { animation-delay: 2.05s; } .fan .a6 { animation-delay: 2.20s; }
+
+      .chip { opacity: 0; transform: translateX(8px); animation: slideIn 0.45s cubic-bezier(.2,.7,.2,1) forwards; }
+      .c1 { animation-delay: 1.55s; } .c2 { animation-delay: 1.70s; }
+      .c3 { animation-delay: 1.85s; } .c4 { animation-delay: 2.00s; }
+      .c5 { animation-delay: 2.15s; } .c6 { animation-delay: 2.30s; }
+
+      @keyframes f { to { opacity: 1; } }
+      @keyframes draw { to { stroke-dashoffset: 0; } }
+      /* opacity gates the marker; combined fade-in + stroke draw avoids the marker leaking before the path arrives. */
+      @keyframes drawFan { 0% { opacity: 0; stroke-dashoffset: 360; } 100% { opacity: 1; stroke-dashoffset: 0; } }
+      @keyframes pop { to { opacity: 1; transform: scale(1); } }
+      @keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
+      @keyframes bashPulse {
+        0%,100% { filter: drop-shadow(0 0 3px rgba(239,68,68,.35)); }
+        50%     { filter: drop-shadow(0 0 10px rgba(239,68,68,.85)); }
+      }
+    ]]></style>
+  </defs>
+  <text filter="url(#txtShadow)" class="title" x="512" y="60" text-anchor="middle">Bash: The Single Funnel</text>
+
+  <!-- Agent -->
+  <g class="agent-box">
+    <rect x="60" y="262" width="140" height="52" rx="10" fill="#0F172A" stroke="#E2E8F0" stroke-width="1.5"/>
+    <text filter="url(#txtShadow)" class="agent-label mono" x="130" y="294" text-anchor="middle">Agent</text>
+  </g>
+
+  <!-- Arrow Agent -> Bash -->
+  <line class="arr-main" x1="200" y1="288" x2="380" y2="288" stroke="#E2E8F0" stroke-width="2" marker-end="url(#arr-w)"/>
+
+  <!-- Bash node -->
+  <g class="bash-box">
+    <g class="bash-pulse">
+      <rect x="380" y="244" width="180" height="92" rx="12" fill="#0F172A" stroke="#EF4444" stroke-width="2.5"/>
+    </g>
+    <text filter="url(#txtShadow)" class="bash-label" x="470" y="299" text-anchor="middle">Bash</text>
+  </g>
+
+  <!-- Production Surface dashed group -->
+  <g class="surface-group">
+    <rect x="780" y="80" width="200" height="430" rx="14" fill="none" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="6 5" opacity="0.55"/>
+    <text filter="url(#txtShadow)" class="surface-label" x="880" y="535" text-anchor="middle">Production Surface</text>
+  </g>
+
+  <!-- 6 chips -->
+  <g class="chip c1"><rect x="810" y="108" width="140" height="40" rx="8" fill="#0F172A" stroke="#EF4444" stroke-width="1.6"/><text filter="url(#txtShadow)" class="chip-label mono" x="880" y="133" text-anchor="middle">rm -rf</text></g>
+  <g class="chip c2"><rect x="810" y="170" width="140" height="40" rx="8" fill="#0F172A" stroke="#EF4444" stroke-width="1.6"/><text filter="url(#txtShadow)" class="chip-label mono" x="880" y="195" text-anchor="middle">aws cli</text></g>
+  <g class="chip c3"><rect x="810" y="232" width="140" height="40" rx="8" fill="#0F172A" stroke="#EF4444" stroke-width="1.6"/><text filter="url(#txtShadow)" class="chip-label mono" x="880" y="257" text-anchor="middle">gcloud</text></g>
+  <g class="chip c4"><rect x="810" y="294" width="140" height="40" rx="8" fill="#0F172A" stroke="#EF4444" stroke-width="1.6"/><text filter="url(#txtShadow)" class="chip-label mono" x="880" y="319" text-anchor="middle">vercel</text></g>
+  <g class="chip c5"><rect x="810" y="356" width="140" height="40" rx="8" fill="#0F172A" stroke="#EF4444" stroke-width="1.6"/><text filter="url(#txtShadow)" class="chip-label mono" x="880" y="381" text-anchor="middle">git push</text></g>
+  <g class="chip c6"><rect x="810" y="418" width="140" height="40" rx="8" fill="#0F172A" stroke="#EF4444" stroke-width="1.6"/><text filter="url(#txtShadow)" class="chip-label mono" x="880" y="443" text-anchor="middle">curl</text></g>
+
+  <!-- 6 fan arrows from Bash right edge (560,290) -->
+  <g class="fan" fill="none" stroke="#E2E8F0" stroke-width="1.8">
+    <path class="a1" d="M560,272 Q680,200 805,128" marker-end="url(#arr-w)"/>
+    <path class="a2" d="M560,278 Q680,235 805,190" marker-end="url(#arr-w)"/>
+    <path class="a3" d="M560,285 Q680,265 805,252" marker-end="url(#arr-w)"/>
+    <path class="a4" d="M560,295 Q680,305 805,314" marker-end="url(#arr-w)"/>
+    <path class="a5" d="M560,302 Q680,338 805,376" marker-end="url(#arr-w)"/>
+    <path class="a6" d="M560,308 Q680,370 805,438" marker-end="url(#arr-w)"/>
+  </g>
+</svg>

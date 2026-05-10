@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 576" width="1024" height="576" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="txtShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.6" result="thick"/>
+      <feGaussianBlur in="thick" stdDeviation="2.2" result="blur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.95" result="flood"/>
+      <feComposite in="flood" in2="blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- BASELINE BLOOM (always-on glow). 2-pass blur only — medium + large
+         radii layered for a smooth radial falloff. Cheaper than 3 passes
+         while still producing a smooth gradient (no boxy edges). -->
+    <filter id="bloom-l1" x="-100%" y="-300%" width="300%" height="700%">
+      <feGaussianBlur stdDeviation="5"  in="SourceGraphic" result="b1"/>
+      <feGaussianBlur stdDeviation="14" in="SourceGraphic" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="bloom-l2" x="-100%" y="-350%" width="300%" height="800%">
+      <feGaussianBlur stdDeviation="6"  in="SourceGraphic" result="b1"/>
+      <feGaussianBlur stdDeviation="17" in="SourceGraphic" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="bloom-l3" x="-100%" y="-350%" width="300%" height="800%">
+      <feGaussianBlur stdDeviation="8"  in="SourceGraphic" result="b1"/>
+      <feGaussianBlur stdDeviation="22" in="SourceGraphic" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="bloom-l4" x="-100%" y="-400%" width="300%" height="900%">
+      <feGaussianBlur stdDeviation="10" in="SourceGraphic" result="b1"/>
+      <feGaussianBlur stdDeviation="28" in="SourceGraphic" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="bloom-l5" x="-100%" y="-400%" width="300%" height="900%">
+      <feGaussianBlur stdDeviation="12" in="SourceGraphic" result="b1"/>
+      <feGaussianBlur stdDeviation="34" in="SourceGraphic" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- PULSE BLOOM (single-pass blur — 1/3 the cost of multi-pass). The pulse
+         aura is a thicker stroked rect that fades in/out via opacity. The single
+         blur produces a smooth halo without the per-frame filter-cache invalidation
+         that scale/stroke-width animations would trigger. -->
+    <filter id="pulse-bloom-l1" x="-100%" y="-400%" width="300%" height="900%">
+      <feGaussianBlur stdDeviation="10" in="SourceGraphic"/>
+    </filter>
+    <filter id="pulse-bloom-l2" x="-100%" y="-400%" width="300%" height="900%">
+      <feGaussianBlur stdDeviation="14" in="SourceGraphic"/>
+    </filter>
+    <filter id="pulse-bloom-l3" x="-100%" y="-450%" width="300%" height="1000%">
+      <feGaussianBlur stdDeviation="20" in="SourceGraphic"/>
+    </filter>
+    <filter id="pulse-bloom-l4" x="-100%" y="-500%" width="300%" height="1100%">
+      <feGaussianBlur stdDeviation="28" in="SourceGraphic"/>
+    </filter>
+    <filter id="pulse-bloom-l5" x="-100%" y="-500%" width="300%" height="1100%">
+      <feGaussianBlur stdDeviation="38" in="SourceGraphic"/>
+    </filter>
+
+    <style><![CDATA[
+      .title     { font-weight: 700; font-size: 32px; fill: #FFFFFF; letter-spacing: -0.5px; }
+      .lvl-tag   { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; font-weight: 600; fill: #FFFFFF; }
+      .lvl-text  { font-size: 18px; fill: #FFFFFF; font-weight: 500; }
+      .side-label{ font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 700; letter-spacing: 1.2px; }
+
+      /* Slide-in cascade (0-5s) */
+      .bar { opacity: 0; transform: translateY(40px); transform-box: fill-box; transform-origin: center; }
+      .b1 { animation: rise 1.0s cubic-bezier(.2,.7,.2,1) 0.0s forwards; }
+      .b2 { animation: rise 1.0s cubic-bezier(.2,.7,.2,1) 1.0s forwards; }
+      .b3 { animation: rise 1.0s cubic-bezier(.2,.7,.2,1) 2.0s forwards; }
+      .b4 { animation: rise 1.0s cubic-bezier(.2,.7,.2,1) 3.0s forwards; }
+      .b5 { animation: rise 1.0s cubic-bezier(.2,.7,.2,1) 4.0s forwards; }
+
+      .bar-stroke { stroke-width: 2.5; }
+
+      /* Pulse aura: ONLY opacity is animated. No scale, no stroke-width changes
+         (those force per-frame filter-cache invalidation and rasterization).
+         Opacity-only animation is GPU-friendly and produces buttery 60fps even
+         under multiple simultaneous filtered elements. */
+      .pulse-aura {
+        opacity: 0;
+        fill: none;
+        stroke-width: 6;
+      }
+      .pa1 { animation: pulseAura 5s linear 5.0s infinite; }
+      .pa2 { animation: pulseAura 5s linear 6.0s infinite; }
+      .pa3 { animation: pulseAura 5s linear 7.0s infinite; }
+      .pa4 { animation: pulseAura 5s linear 8.0s infinite; }
+      .pa5 { animation: pulseAura 5s linear 9.0s infinite; }
+      /* Smooth ramp: 0% -> 16% rise (ease-in implicit via cubic curve), peak hold
+         16-22%, 22% -> 44% slow fade (ease-out). Dormant 44-100%. Gentle curve,
+         no instant snaps. Linear timing function is fine because all the easing
+         is already baked into the keyframe distribution. */
+      @keyframes pulseAura {
+        0%   { opacity: 0; }
+        16%  { opacity: 1; }
+        22%  { opacity: 1; }
+        44%  { opacity: 0; }
+        100% { opacity: 0; }
+      }
+
+      .label-side { opacity: 0; animation: fadeIn 0.6s ease forwards; }
+      .lab-worst  { animation-delay: 0.3s; }
+      .lab-best   { animation-delay: 4.3s; }
+
+      @keyframes rise   { to { opacity: 1; transform: translateY(0); } }
+      @keyframes fadeIn { to { opacity: 1; } }
+    ]]></style>
+  </defs>
+  <text filter="url(#txtShadow)" class="title" x="512" y="62" text-anchor="middle">Five Levels of Bash Security</text>
+
+  <!-- L1 (worst, bottom) red. Bar is the always-on glow source.
+       Pulse aura is a thicker stroked rect blurred by pulse-bloom; opacity fades. -->
+  <g class="bar b1" filter="url(#bloom-l1)">
+    <rect class="bar-stroke" x="220" y="430" width="540" height="44" rx="8" fill="#0F172A" stroke="#EF4444"/>
+    <rect x="220" y="430" width="6" height="44" rx="3" fill="#EF4444"/>
+    <text filter="url(#txtShadow)" class="lvl-tag"  x="244" y="458">L1</text>
+    <text filter="url(#txtShadow)" class="lvl-text" x="490" y="459" text-anchor="middle">User Prompt</text>
+    <rect class="pulse-aura pa1" x="220" y="430" width="540" height="44" rx="8" stroke="#EF4444" filter="url(#pulse-bloom-l1)"/>
+  </g>
+  <text filter="url(#txtShadow)" class="side-label label-side lab-worst" x="208" y="458" text-anchor="end" fill="#EF4444">WORST</text>
+
+  <!-- L2 orange -->
+  <g class="bar b2" filter="url(#bloom-l2)">
+    <rect class="bar-stroke" x="240" y="358" width="540" height="44" rx="8" fill="#0F172A" stroke="#F97316"/>
+    <rect x="240" y="358" width="6" height="44" rx="3" fill="#F97316"/>
+    <text filter="url(#txtShadow)" class="lvl-tag"  x="264" y="386">L2</text>
+    <text filter="url(#txtShadow)" class="lvl-text" x="510" y="387" text-anchor="middle">System Prompt</text>
+    <rect class="pulse-aura pa2" x="240" y="358" width="540" height="44" rx="8" stroke="#F97316" filter="url(#pulse-bloom-l2)"/>
+  </g>
+
+  <!-- L3 amber -->
+  <g class="bar b3" filter="url(#bloom-l3)">
+    <rect class="bar-stroke" x="260" y="286" width="540" height="44" rx="8" fill="#0F172A" stroke="#F59E0B"/>
+    <rect x="260" y="286" width="6" height="44" rx="3" fill="#F59E0B"/>
+    <text filter="url(#txtShadow)" class="lvl-tag"  x="284" y="314">L3</text>
+    <text filter="url(#txtShadow)" class="lvl-text" x="530" y="315" text-anchor="middle">Bash + Blacklist</text>
+    <rect class="pulse-aura pa3" x="260" y="286" width="540" height="44" rx="8" stroke="#F59E0B" filter="url(#pulse-bloom-l3)"/>
+  </g>
+
+  <!-- L4 lime -->
+  <g class="bar b4" filter="url(#bloom-l4)">
+    <rect class="bar-stroke" x="280" y="214" width="540" height="44" rx="8" fill="#0F172A" stroke="#84CC16"/>
+    <rect x="280" y="214" width="6" height="44" rx="3" fill="#84CC16"/>
+    <text filter="url(#txtShadow)" class="lvl-tag"  x="304" y="242">L4</text>
+    <text filter="url(#txtShadow)" class="lvl-text" x="550" y="243" text-anchor="middle">Bash + Whitelist</text>
+    <rect class="pulse-aura pa4" x="280" y="214" width="540" height="44" rx="8" stroke="#84CC16" filter="url(#pulse-bloom-l4)"/>
+  </g>
+
+  <!-- L5 emerald -->
+  <g class="bar b5" filter="url(#bloom-l5)">
+    <rect class="bar-stroke" x="300" y="142" width="540" height="44" rx="8" fill="#0F172A" stroke="#10B981"/>
+    <rect x="300" y="142" width="6" height="44" rx="3" fill="#10B981"/>
+    <text filter="url(#txtShadow)" class="lvl-tag"  x="324" y="170">L5</text>
+    <text filter="url(#txtShadow)" class="lvl-text" x="570" y="171" text-anchor="middle">No Bash Tool</text>
+    <rect class="pulse-aura pa5" x="300" y="142" width="540" height="44" rx="8" stroke="#10B981" filter="url(#pulse-bloom-l5)"/>
+  </g>
+  <text filter="url(#txtShadow)" class="side-label label-side lab-best" x="288" y="170" text-anchor="end" fill="#10B981">BEST</text>
+</svg>

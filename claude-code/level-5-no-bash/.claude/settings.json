@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "statusLine": {
+    "type": "command",
+    "command": "uv run ../../.claude/status_lines/minimal.py",
+    "padding": 0
+  },
+  "permissions": {
+    "deny": [
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "Read(./target/secrets.env)",
+
+      "Agent",
+      "Skill",
+      "AskUserQuestion",
+      "ToolSearch",
+      "ScheduleWakeup",
+      "ShareOnboardingGuide",
+      "NotebookEdit",
+      "ListMcpResourcesTool",
+      "ReadMcpResourceTool",
+
+      "EnterPlanMode",
+      "ExitPlanMode",
+      "EnterWorktree",
+      "ExitWorktree",
+
+      "TaskCreate",
+      "TaskList",
+      "TaskGet",
+      "TaskUpdate",
+      "TaskOutput",
+      "TaskStop",
+      "TeamCreate",
+      "TeamDelete",
+      "SendMessage",
+
+      "CronCreate",
+      "CronList",
+      "CronDelete",
+      "Monitor",
+      "PushNotification",
+      "RemoteTrigger",
+
+      "mcp__claude_ai_Gmail__authenticate",
+      "mcp__claude_ai_Gmail__complete_authentication",
+      "mcp__claude_ai_Google_Calendar__authenticate",
+      "mcp__claude_ai_Google_Calendar__complete_authentication",
+      "mcp__claude_ai_Google_Drive__authenticate",
+      "mcp__claude_ai_Google_Drive__complete_authentication",
+      "mcp__claude_ai_Notion__authenticate",
+      "mcp__claude_ai_Notion__complete_authentication",
+
+      "mcp__figma__add_code_connect_map",
+      "mcp__figma__create_design_system_rules",
+      "mcp__figma__create_new_file",
+      "mcp__figma__generate_diagram",
+      "mcp__figma__generate_figma_design",
+      "mcp__figma__get_code_connect_map",
+      "mcp__figma__get_code_connect_suggestions",
+      "mcp__figma__get_context_for_code_connect",
+      "mcp__figma__get_design_context",
+      "mcp__figma__get_figjam",
+      "mcp__figma__get_libraries",
+      "mcp__figma__get_metadata",
+      "mcp__figma__get_screenshot",
+      "mcp__figma__get_variable_defs",
+      "mcp__figma__search_design_system",
+      "mcp__figma__send_code_connect_mappings",
+      "mcp__figma__upload_assets",
+      "mcp__figma__use_figma",
+      "mcp__figma__whoami",
+
+      "mcp__ide__executeCode",
+      "mcp__ide__getDiagnostics"
+    ],
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "mcp__safe-tools__run_tests",
+      "mcp__safe-tools__git_status",
+      "mcp__safe-tools__list_target"
+    ]
+  },
+  "enableAllProjectMcpServers": true
+}

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 576" width="1024" height="576" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="txtShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.6" result="thick"/>
+      <feGaussianBlur in="thick" stdDeviation="2.2" result="blur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.95" result="flood"/>
+      <feComposite in="flood" in2="blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="emerald-glow" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style><![CDATA[
+      .bar { opacity: 0; transform: translateY(40px); transform-box: fill-box; transform-origin: center; animation: rise 0.6s cubic-bezier(.2,.7,.2,1) forwards; }
+      .b1 { animation-delay: 0.10s; }
+      .b2 { animation-delay: 0.40s; }
+      .b3 { animation-delay: 0.70s; }
+      .b4 { animation-delay: 1.00s; }
+      .b5 { animation-delay: 1.30s; }
+      .label-side { opacity: 0; animation: fadeIn 0.6s ease forwards; }
+      .lab-worst { animation-delay: 0.20s; }
+      .lab-best  { animation-delay: 1.40s; }
+      .glow-pulse {
+        animation: glowPulse 2.4s ease-in-out 1.7s infinite;
+        transform-box: fill-box; transform-origin: center;
+      }
+      @keyframes rise {
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeIn { to { opacity: 1; } }
+      @keyframes glowPulse {
+        0%,100% { filter: drop-shadow(0 0 4px #10B981) drop-shadow(0 0 10px rgba(16,185,129,.45)); }
+        50%     { filter: drop-shadow(0 0 12px #10B981) drop-shadow(0 0 28px rgba(16,185,129,.85)); }
+      }
+      .title { font-weight: 700; font-size: 32px; fill: #FFFFFF; letter-spacing: -0.5px; }
+      .lvl-tag { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; font-weight: 600; fill: #E2E8F0; }
+      .lvl-text { font-size: 18px; fill: #FFFFFF; font-weight: 500; }
+      .side-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 700; letter-spacing: 1.2px; }
+    ]]></style>
+  </defs>
+  <text filter="url(#txtShadow)" class="title" x="512" y="62" text-anchor="middle">Five Levels of Bash Security</text>
+
+  <!-- L1 (worst, bottom) red -->
+  <g class="bar b1">
+    <rect x="220" y="430" width="540" height="44" rx="8" fill="#0F172A" stroke="#1E293B" stroke-width="1"/>
+    <rect x="220" y="430" width="6" height="44" rx="3" fill="#EF4444"/>
+    <text filter="url(#txtShadow)" class="lvl-tag" x="244" y="458">L1</text>
+    <text filter="url(#txtShadow)" class="lvl-text" x="490" y="459" text-anchor="middle">User Prompt</text>
+  </g>
+  <text filter="url(#txtShadow)" class="side-label label-side lab-worst" x="208" y="458" text-anchor="end" fill="#EF4444">WORST</text>
+
+  <!-- L2 -->
+  <g class="bar b2">
+    <rect x="240" y="358" width="540" height="44" rx="8" fill="#0F172A" stroke="#1E293B" stroke-width="1"/>
+    <rect x="240" y="358" width="6" height="44" rx="3" fill="#F97316"/>
+    <text filter="url(#txtShadow)" class="lvl-tag" x="264" y="386">L2</text>
+    <text filter="url(#txtShadow)" class="lvl-text" x="510" y="387" text-anchor="middle">System Prompt</text>
+  </g>
+
+  <!-- L3 -->
+  <g class="bar b3">
+    <rect x="260" y="286" width="540" height="44" rx="8" fill="#0F172A" stroke="#1E293B" stroke-width="1"/>
+    <rect x="260" y="286" width="6" height="44" rx="3" fill="#F59E0B"/>
+    <text filter="url(#txtShadow)" class="lvl-tag" x="284" y="314">L3</text>
+    <text filter="url(#txtShadow)" class="lvl-text" x="530" y="315" text-anchor="middle">Bash + Blacklist</text>
+  </g>
+
+  <!-- L4 -->
+  <g class="bar b4">
+    <rect x="280" y="214" width="540" height="44" rx="8" fill="#0F172A" stroke="#1E293B" stroke-width="1"/>
+    <rect x="280" y="214" width="6" height="44" rx="3" fill="#84CC16"/>
+    <text filter="url(#txtShadow)" class="lvl-tag" x="304" y="242">L4</text>
+    <text filter="url(#txtShadow)" class="lvl-text" x="550" y="243" text-anchor="middle">Bash + Whitelist</text>
+  </g>
+
+  <!-- L5 (best, top) emerald with glow -->
+  <g class="bar b5">
+    <g class="glow-pulse" filter="url(#emerald-glow)">
+      <rect x="300" y="142" width="540" height="44" rx="8" fill="#0F172A" stroke="#10B981" stroke-width="1.5"/>
+    </g>
+    <rect x="300" y="142" width="6" height="44" rx="3" fill="#10B981"/>
+    <text filter="url(#txtShadow)" class="lvl-tag" x="324" y="170">L5</text>
+    <text filter="url(#txtShadow)" class="lvl-text" x="570" y="171" text-anchor="middle">No Bash Tool</text>
+  </g>
+  <text filter="url(#txtShadow)" class="side-label label-side lab-best" x="288" y="170" text-anchor="end" fill="#10B981">BEST</text>
+</svg>

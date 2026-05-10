@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 576" width="1024" height="576" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="txtShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.6" result="thick"/>
+      <feGaussianBlur in="thick" stdDeviation="2.2" result="blur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.95" result="flood"/>
+      <feComposite in="flood" in2="blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <marker id="arr-w3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E2E8F0"/></marker>
+    <marker id="arr-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#10B981"/></marker>
+    <marker id="arr-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#EF4444"/></marker>
+    <style><![CDATA[
+      .title { font-weight: 700; font-size: 30px; fill: #FFFFFF; letter-spacing: -0.5px; }
+      .node-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; fill: #FFFFFF; }
+      .hook-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 16px; font-weight: 700; fill: #FFFFFF; }
+      .pill-label { font-size: 14px; font-weight: 600; fill: #FFFFFF; }
+      .sub        { font-size: 11px; fill: #FFFFFF; }
+
+      .nbox { opacity: 0; transform: translateY(8px); animation: rise 0.4s ease forwards; }
+      .n1 { animation-delay: 0.10s; } .n2 { animation-delay: 0.30s; }
+      .n3 { animation-delay: 0.50s; } .n4 { animation-delay: 0.70s; }
+      .n5 { animation-delay: 2.20s; } .n6 { animation-delay: 2.60s; }
+
+      /* Lines: hide entirely (incl. marker arrowhead) until they begin to draw */
+      .seg { stroke-dasharray: 100; stroke-dashoffset: 100; opacity: 0; }
+      .s1 { animation: draw 0.35s ease 0.30s forwards, fadein 0.05s linear 0.30s forwards; }
+      .s2 { animation: draw 0.35s ease 0.50s forwards, fadein 0.05s linear 0.50s forwards; }
+      .s3 { animation: draw 0.35s ease 0.70s forwards, fadein 0.05s linear 0.70s forwards; }
+      /* s4 is 150px — needs a longer dasharray and longer draw window */
+      .s4 { stroke-dasharray: 160; stroke-dashoffset: 160; animation: draw 0.5s ease 1.90s forwards, fadein 0.05s linear 1.90s forwards; }
+      .s5 { animation: draw 0.35s ease 2.40s forwards, fadein 0.05s linear 2.40s forwards; }
+      .branch-up { stroke-dasharray: 260; stroke-dashoffset: 260; opacity: 0; animation: draw 0.6s ease 1.50s forwards, fadein 0.05s linear 1.50s forwards; }
+      .branch-dn { stroke-dasharray: 260; stroke-dashoffset: 260; opacity: 0; animation: draw 0.6s ease 1.50s forwards, fadein 0.05s linear 1.50s forwards; }
+
+      /* Arrowheads — only appear once their line has finished drawing */
+      .ah { opacity: 0; }
+      .ah-s1 { animation: fadein 0.12s ease 0.65s forwards; }
+      .ah-s2 { animation: fadein 0.12s ease 0.85s forwards; }
+      .ah-s3 { animation: fadein 0.12s ease 1.05s forwards; }
+      .ah-s4 { animation: fadein 0.12s ease 2.40s forwards; }
+      .ah-s5 { animation: fadein 0.12s ease 2.75s forwards; }
+      .ah-bu { animation: fadein 0.12s ease 2.10s forwards; }
+      .ah-bd { animation: fadein 0.12s ease 2.10s forwards; }
+
+      .pill { opacity: 0; transform: scale(.7); transform-box: fill-box; transform-origin: center; }
+      .pill-allow { animation: pop 0.4s cubic-bezier(.2,.9,.3,1.4) 2.65s forwards; }
+      .pill-block { animation: pop 0.4s cubic-bezier(.2,.9,.3,1.4) 2.65s forwards; }
+
+      /* packet traveling pipeline */
+      .packet { offset-path: path('M140,310 L170,310 L270,310 L300,310 L400,310 L430,310'); offset-rotate: 0deg; animation: travel 1.0s ease 0.9s forwards; opacity: 0; }
+      @keyframes travel {
+        0%   { offset-distance: 0%;   opacity: 1; }
+        90%  { offset-distance: 100%; opacity: 1; }
+        100% { offset-distance: 100%; opacity: 0; }
+      }
+      .packet-up { offset-path: path('M510,278 Q620,235 740,222'); offset-rotate: 0deg; animation: travel2 0.7s ease 2.10s forwards; opacity: 0; }
+      .packet-dn { offset-path: path('M510,342 Q620,385 740,396'); offset-rotate: 0deg; animation: travel2 0.7s ease 2.10s forwards; opacity: 0; }
+      .packet-bash { offset-path: path('M550,310 L700,310'); offset-rotate: 0deg; animation: travel3 0.5s ease 2.45s forwards; opacity: 0; }
+      @keyframes travel2 {
+        0%   { offset-distance: 0%;   opacity: 1; }
+        90%  { offset-distance: 100%; opacity: 1; }
+        100% { offset-distance: 100%; opacity: 0; }
+      }
+      @keyframes travel3 {
+        0%   { offset-distance: 0%;   opacity: 1; }
+        90%  { offset-distance: 100%; opacity: 1; }
+        100% { offset-distance: 100%; opacity: 0; }
+      }
+      .hook-pulse { animation: hpulse 2.4s ease-in-out 3.2s infinite; transform-box: fill-box; transform-origin: center; }
+      @keyframes hpulse {
+        0%,100% { filter: drop-shadow(0 0 2px rgba(245,158,11,.0)); }
+        50%     { filter: drop-shadow(0 0 8px rgba(245,158,11,.6)); }
+      }
+
+      @keyframes rise   { to { opacity: 1; transform: translateY(0); } }
+      @keyframes draw   { to { stroke-dashoffset: 0; } }
+      @keyframes pop    { to { opacity: 1; transform: scale(1); } }
+      @keyframes fadein { to { opacity: 1; } }
+    ]]></style>
+  </defs>
+  <text filter="url(#txtShadow)" class="title" x="512" y="58" text-anchor="middle">Hook Intercept</text>
+
+  <!-- Pipeline nodes -->
+  <g class="nbox n1"><rect x="40"  y="288" width="100" height="44" rx="8" fill="#0F172A" stroke="#E2E8F0" stroke-width="1.4"/><text filter="url(#txtShadow)" class="node-label" x="90"  y="315" text-anchor="middle">Prompt</text></g>
+  <g class="nbox n2"><rect x="170" y="288" width="100" height="44" rx="8" fill="#0F172A" stroke="#E2E8F0" stroke-width="1.4"/><text filter="url(#txtShadow)" class="node-label" x="220" y="315" text-anchor="middle">Agent</text></g>
+  <g class="nbox n3"><rect x="300" y="288" width="100" height="44" rx="8" fill="#0F172A" stroke="#E2E8F0" stroke-width="1.4"/><text filter="url(#txtShadow)" class="node-label" x="350" y="315" text-anchor="middle">Tool Call</text></g>
+
+  <!-- Hook (highlighted) -->
+  <g class="nbox n4">
+    <g class="hook-pulse">
+      <rect x="430" y="278" width="120" height="64" rx="10" fill="#0F172A" stroke="#F59E0B" stroke-width="2"/>
+    </g>
+    <text filter="url(#txtShadow)" class="hook-label" x="490" y="312" text-anchor="middle">Hook</text>
+    <text filter="url(#txtShadow)" class="sub" x="490" y="362" text-anchor="middle">Damage Control</text>
+  </g>
+
+  <g class="nbox n5"><rect x="700" y="288" width="100" height="44" rx="8" fill="#0F172A" stroke="#E2E8F0" stroke-width="1.4"/><text filter="url(#txtShadow)" class="node-label" x="750" y="315" text-anchor="middle">Bash</text></g>
+  <g class="nbox n6"><rect x="830" y="288" width="120" height="44" rx="8" fill="#0F172A" stroke="#E2E8F0" stroke-width="1.4"/><text filter="url(#txtShadow)" class="node-label" x="890" y="315" text-anchor="middle">System</text></g>
+
+  <!-- Connectors (no marker-end; explicit arrowheads below fade in when line completes) -->
+  <line class="seg s1" x1="140" y1="310" x2="170" y2="310" stroke="#E2E8F0" stroke-width="1.6"/>
+  <line class="seg s2" x1="270" y1="310" x2="300" y2="310" stroke="#E2E8F0" stroke-width="1.6"/>
+  <line class="seg s3" x1="400" y1="310" x2="430" y2="310" stroke="#E2E8F0" stroke-width="1.6"/>
+  <!-- Hook to Bash (green path - allow continuation) -->
+  <line class="seg s4" x1="550" y1="310" x2="700" y2="310" stroke="#10B981" stroke-width="1.6"/>
+  <line class="seg s5" x1="800" y1="310" x2="830" y2="310" stroke="#E2E8F0" stroke-width="1.6"/>
+
+  <!-- Branch up to Allow (ends just below bottom-center of Allow pill at 740,218) -->
+  <path class="branch-up" d="M510,278 Q620,235 740,220" fill="none" stroke="#10B981" stroke-width="1.6"/>
+  <!-- Branch down to Block (ends just above top-center of Block pill at 740,400) -->
+  <path class="branch-dn" d="M510,342 Q620,385 740,398" fill="none" stroke="#EF4444" stroke-width="1.6"/>
+
+  <!-- Explicit arrowheads (fade in as each line finishes drawing). Triangle points right by default. -->
+  <!-- Horizontal arrows pointing right: tip at (x_end, y), base 8px to left -->
+  <polygon class="ah ah-s1" points="170,306 170,314 178,310" fill="#E2E8F0"/>
+  <polygon class="ah ah-s2" points="300,306 300,314 308,310" fill="#E2E8F0"/>
+  <polygon class="ah ah-s3" points="430,306 430,314 438,310" fill="#E2E8F0"/>
+  <polygon class="ah ah-s4" points="700,306 700,314 708,310" fill="#10B981"/>
+  <polygon class="ah ah-s5" points="830,306 830,314 838,310" fill="#E2E8F0"/>
+  <!-- Branch-up arrow tip points up-right (~angle -10deg). Endpoint (740,220), oriented along Q-curve tangent. -->
+  <polygon class="ah ah-bu" points="732,217 736,225 745,221" fill="#10B981"/>
+  <!-- Branch-dn arrow tip points down-right (~angle +10deg). Endpoint (740,398). -->
+  <polygon class="ah ah-bd" points="732,401 736,393 745,397" fill="#EF4444"/>
+
+  <!-- Allow pill -->
+  <g class="pill pill-allow">
+    <rect x="690" y="178" width="100" height="40" rx="20" fill="#10B981" stroke="#10B981" stroke-width="1.5"/>
+    <text filter="url(#txtShadow)" class="pill-label" x="740" y="203" text-anchor="middle">Allow</text>
+  </g>
+  <!-- Block pill -->
+  <g class="pill pill-block">
+    <rect x="690" y="400" width="100" height="40" rx="20" fill="#7F1D1D" stroke="#EF4444" stroke-width="1.5"/>
+    <text filter="url(#txtShadow)" class="pill-label" x="740" y="425" text-anchor="middle">Block</text>
+  </g>
+
+  <!-- Packet -->
+  <circle class="packet" r="5" fill="#E2E8F0"/>
+  <circle class="packet-bash" r="5" fill="#10B981"/>
+  <circle class="packet-up" r="5" fill="#10B981"/>
+  <circle class="packet-dn" r="5" fill="#EF4444"/>
+</svg>

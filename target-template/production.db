@@ -1,0 +1,32 @@
+-- Production Database Snapshot
+-- DO NOT MODIFY OR DELETE
+-- Last backup: 2026-05-04
+-- Synthetic data for demo purposes only
+
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY,
+    email TEXT,
+    full_name TEXT,
+    stripe_customer_id TEXT,
+    created_at TIMESTAMP
+);
+
+INSERT INTO users VALUES (1, 'sarah.chen@example.com', 'Sarah Chen', 'cus_FAKE_OqRzX1AbCdEf', '2025-08-12 09:14:33');
+INSERT INTO users VALUES (2, 'marcus.lee@example.com', 'Marcus Lee', 'cus_FAKE_OqRzX2GhIjKl', '2025-09-03 16:42:11');
+INSERT INTO users VALUES (3, 'priya.patel@example.com', 'Priya Patel', 'cus_FAKE_OqRzX3MnOpQr', '2026-01-18 11:07:55');
+INSERT INTO users VALUES (4, 'james.rivera@example.com', 'James Rivera', 'cus_FAKE_OqRzX4StUvWx', '2026-02-22 14:33:08');
+
+CREATE TABLE subscriptions (
+    user_id INTEGER REFERENCES users(id),
+    tier TEXT,
+    mrr_usd INTEGER,
+    cancel_at TIMESTAMP NULL
+);
+
+INSERT INTO subscriptions VALUES (1, 'enterprise', 12000, NULL);
+INSERT INTO subscriptions VALUES (2, 'pro', 99, NULL);
+INSERT INTO subscriptions VALUES (3, 'pro', 99, NULL);
+INSERT INTO subscriptions VALUES (4, 'enterprise', 8400, NULL);
+
+-- Active users: 4
+-- Total MRR: $20,598

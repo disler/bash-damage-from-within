@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 576" width="1024" height="576" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="txtShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.6" result="thick"/>
+      <feGaussianBlur in="thick" stdDeviation="2.2" result="blur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.95" result="flood"/>
+      <feComposite in="flood" in2="blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <style><![CDATA[
+      .title { font-weight: 700; font-size: 30px; fill: #FFFFFF; letter-spacing: -0.5px; }
+      .row-h { font-weight: 700; font-size: 18px; }
+      .node-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; fill: #FFFFFF; }
+      .anything { font-style: italic; font-size: 18px; fill: #FFFFFF; }
+
+      .top-row { animation: dim 0.6s ease 2.0s forwards; }
+      @keyframes dim { to { opacity: 0.5; } }
+
+      .ti { opacity: 0; animation: f 0.4s ease forwards; }
+      .ti1 { animation-delay: 0.1s; } .ti2 { animation-delay: 0.5s; } .ti3 { animation-delay: 1.0s; }
+
+      /* Lines draw via stroke-dashoffset. Arrowheads are SEPARATE polygons that
+         only fade in once their line has finished drawing. This avoids the SVG
+         marker-end bug where the marker is rendered at the path endpoint
+         immediately, regardless of stroke-dashoffset. */
+      /* Each path has pathLength="1" so dash math is normalized to 0..1.
+         dasharray:1 dashoffset:1 -> entire stroke hidden. Animate to 0. */
+      .top-arr  { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 0.4s ease 0.4s forwards; }
+      .chaos path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+      .ca1 { animation: draw 0.5s ease 0.85s forwards; }
+      .ca2 { animation: draw 0.5s ease 1.0s  forwards; }
+      .ca3 { animation: draw 0.5s ease 1.15s forwards; }
+
+      .agent2 { opacity: 0; animation: f 0.5s ease 2.2s forwards; }
+      .b-arr  { stroke-dasharray: 1; stroke-dashoffset: 1; }
+      .ba1 { animation: draw 0.5s ease 2.55s forwards; }
+      .ba2 { animation: draw 0.5s ease 2.75s forwards; }
+      .ba3 { animation: draw 0.5s ease 2.95s forwards; }
+
+      /* Arrowheads start hidden and snap visible just as their line completes. */
+      .head { opacity: 0; }
+      .h-top { animation: f 0.12s ease 0.80s forwards; }
+      .h-ca1 { animation: f 0.12s ease 1.35s forwards; }
+      .h-ca2 { animation: f 0.12s ease 1.50s forwards; }
+      .h-ca3 { animation: f 0.12s ease 1.65s forwards; }
+      .h-ba1 { animation: f 0.12s ease 3.05s forwards; }
+      .h-ba2 { animation: f 0.12s ease 3.25s forwards; }
+      .h-ba3 { animation: f 0.12s ease 3.45s forwards; }
+
+      .gchip { opacity: 0; transform: scale(.85); transform-box: fill-box; transform-origin: center; }
+      .gc1 { animation: gpop 0.45s cubic-bezier(.2,.9,.3,1.4) 2.65s forwards; }
+      .gc2 { animation: gpop 0.45s cubic-bezier(.2,.9,.3,1.4) 2.85s forwards; }
+      .gc3 { animation: gpop 0.45s cubic-bezier(.2,.9,.3,1.4) 3.05s forwards; }
+
+      @keyframes f { to { opacity: 1; } }
+      @keyframes draw { to { stroke-dashoffset: 0; } }
+      @keyframes gpop {
+        0%   { opacity: 0; transform: scale(.85); filter: drop-shadow(0 0 0 rgba(16,185,129,0)); }
+        60%  { opacity: 1; transform: scale(1.05); filter: drop-shadow(0 0 10px rgba(16,185,129,.9)); }
+        100% { opacity: 1; transform: scale(1);    filter: drop-shadow(0 0 4px rgba(16,185,129,.4)); }
+      }
+    ]]></style>
+  </defs>
+  <text filter="url(#txtShadow)" class="title" x="512" y="56" text-anchor="middle">Removing Bash</text>
+
+  <!-- Hairline divider -->
+  <line x1="60" y1="312" x2="964" y2="312" stroke="#334155" stroke-width="1"/>
+
+  <!-- ========== BEFORE (top) ========== -->
+  <g class="top-row">
+    <text filter="url(#txtShadow)" class="row-h" x="80" y="180" fill="#EF4444">Before</text>
+
+    <g class="ti ti1"><rect x="200" y="148" width="120" height="52" rx="10" fill="#0F172A" stroke="#E2E8F0" stroke-width="1.4"/><text filter="url(#txtShadow)" class="node-label" x="260" y="180" text-anchor="middle">Agent</text></g>
+
+    <!-- top short arrow: line + head as separate elements -->
+    <line class="top-arr" pathLength="1" x1="320" y1="174" x2="380" y2="174" stroke="#E2E8F0" stroke-width="1.6"/>
+    <polygon class="head h-top" points="380,174 372,170 372,178" fill="#E2E8F0"/>
+
+    <g class="ti ti2"><rect x="380" y="148" width="120" height="52" rx="10" fill="#0F172A" stroke="#EF4444" stroke-width="1.8"/><text filter="url(#txtShadow)" class="node-label" x="440" y="180" text-anchor="middle">Bash</text></g>
+
+    <!-- chaotic 3 arrows: lines without markers -->
+    <g class="chaos" fill="none" stroke="#E2E8F0" stroke-width="1.6">
+      <path class="ca1" pathLength="1" d="M500,160 Q600,130 720,130"/>
+      <path class="ca2" pathLength="1" d="M500,174 Q600,180 720,180"/>
+      <path class="ca3" pathLength="1" d="M500,188 Q600,225 720,220"/>
+    </g>
+    <!-- chaotic arrowheads: oriented along path tangent at the endpoint -->
+    <!-- ca1 ends at (720,130) traveling roughly horizontal -->
+    <polygon class="head h-ca1" points="720,130 712,126 712,134" fill="#E2E8F0"/>
+    <!-- ca2 ends at (720,180) horizontal -->
+    <polygon class="head h-ca2" points="720,180 712,176 712,184" fill="#E2E8F0"/>
+    <!-- ca3 ends at (720,220) approximately horizontal (slight upward) -->
+    <polygon class="head h-ca3" points="720,220 712,216 712,224" fill="#E2E8F0"/>
+
+    <!-- Cloud "Anything" -->
+    <g class="ti ti3">
+      <path d="M730,170 Q730,135 770,135 Q780,110 810,118 Q840,98 865,120 Q905,115 905,150 Q935,155 925,185 Q935,215 895,220 Q880,240 845,230 Q820,245 795,225 Q760,235 745,210 Q720,205 730,170 Z" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+      <text filter="url(#txtShadow)" class="anything" x="828" y="180" text-anchor="middle">Anything</text>
+    </g>
+  </g>
+
+  <!-- ========== AFTER (bottom) ========== -->
+  <text filter="url(#txtShadow)" class="row-h" x="80" y="430" fill="#10B981">After</text>
+
+  <g class="agent2">
+    <rect x="200" y="398" width="120" height="52" rx="10" fill="#0F172A" stroke="#E2E8F0" stroke-width="1.4"/>
+    <text filter="url(#txtShadow)" class="node-label" x="260" y="430" text-anchor="middle">Agent</text>
+  </g>
+
+  <!-- 3 clean arrows from agent right side to chips: lines without markers -->
+  <g fill="none" stroke="#10B981" stroke-width="1.7">
+    <path class="b-arr ba1" pathLength="1" d="M320,410 Q500,380 700,380"/>
+    <path class="b-arr ba2" pathLength="1" d="M320,424 L700,424"/>
+    <path class="b-arr ba3" pathLength="1" d="M320,438 Q500,468 700,468"/>
+  </g>
+  <!-- separate green arrowheads at each line's end -->
+  <polygon class="head h-ba1" points="700,380 692,376 692,384" fill="#10B981"/>
+  <polygon class="head h-ba2" points="700,424 692,420 692,428" fill="#10B981"/>
+  <polygon class="head h-ba3" points="700,468 692,464 692,472" fill="#10B981"/>
+
+  <!-- 3 green chips (bounded tools) -->
+  <g class="gchip gc1"><rect x="700" y="358" width="160" height="44" rx="10" fill="#0F172A" stroke="#10B981" stroke-width="1.6"/><text filter="url(#txtShadow)" class="node-label" x="780" y="385" text-anchor="middle">run_tests</text></g>
+  <g class="gchip gc2"><rect x="700" y="402" width="160" height="44" rx="10" fill="#0F172A" stroke="#10B981" stroke-width="1.6"/><text filter="url(#txtShadow)" class="node-label" x="780" y="429" text-anchor="middle">read_file</text></g>
+  <g class="gchip gc3"><rect x="700" y="446" width="160" height="44" rx="10" fill="#0F172A" stroke="#10B981" stroke-width="1.6"/><text filter="url(#txtShadow)" class="node-label" x="780" y="473" text-anchor="middle">deploy</text></g>
+</svg>

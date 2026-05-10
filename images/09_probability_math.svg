@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 576" width="1024" height="576" font-family="'JetBrains Mono', 'Menlo', 'Consolas', ui-monospace, monospace">
+  <defs>
+    <filter id="txtShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.6" result="thick"/>
+      <feGaussianBlur in="thick" stdDeviation="2.2" result="blur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.95" result="flood"/>
+      <feComposite in="flood" in2="blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <style><![CDATA[
+      .title { font-family: 'Inter', system-ui, sans-serif; font-weight: 700; font-size: 32px; fill: #FFFFFF; letter-spacing: -0.5px; }
+      .mono  { font-family: 'JetBrains Mono', 'Menlo', 'Consolas', ui-monospace, monospace; }
+      .math  { font-size: 28px; fill: #FFFFFF; }
+      .red   { fill: #EF4444; }
+      .tag   { font-family: 'Inter', system-ui, sans-serif; font-style: italic; font-size: 17px; fill: #FFFFFF; }
+
+      /* Progressive fade-in. fill-mode: both → the @keyframes 0% state (opacity:0)
+         applies BACKWARDS during the animation-delay window, so each element stays
+         hidden until its delay elapses. After animation, the 100% state is held.
+         Non-animating viewers (Preview, Quick Look) skip CSS animations entirely
+         and render the static SVG defaults — fully visible — so static rendering
+         remains correct. */
+      .l1, .l2, .l3, .tagline { animation: fadein 0.9s ease both; }
+      .l1 { animation-delay: 0.45s; }
+      .l2 { animation-delay: 1.95s; }
+      .divider-shadow, .divider-line { animation: drawDivider 1.05s ease 3.45s both; }
+      .l3 { animation-delay: 4.8s; }
+      .tagline { animation-delay: 6.6s; }
+
+      @keyframes fadein {
+        0%   { opacity: 0; }
+        100% { opacity: 1; }
+      }
+      @keyframes drawDivider {
+        0%   { stroke-dasharray: 700; stroke-dashoffset: 700; }
+        100% { stroke-dasharray: 700; stroke-dashoffset: 0; }
+      }
+    ]]></style>
+  </defs>
+  <text filter="url(#txtShadow)" class="title" x="512" y="68" text-anchor="middle">The Probability Math</text>
+
+  <!-- Math block: operands right-aligned at x=365, descriptions left-aligned at x=405. -->
+  <text filter="url(#txtShadow)" class="math mono l1" y="200">
+    <tspan x="365" text-anchor="end">0.001%</tspan>
+    <tspan x="405" text-anchor="start">catastrophic failure rate</tspan>
+  </text>
+
+  <text filter="url(#txtShadow)" class="math mono l2" y="260">
+    <tspan x="365" text-anchor="end">× 100,000</tspan>
+    <tspan x="405" text-anchor="start">agent runs / month</tspan>
+  </text>
+
+  <!-- Two-line shadow divider: dark wider behind, white thinner in front. -->
+  <line class="divider-shadow" x1="180" y1="305" x2="830" y2="305" stroke="#000000" stroke-width="4" opacity="0.55"/>
+  <line class="divider-line"   x1="180" y1="305" x2="830" y2="305" stroke="#FFFFFF" stroke-width="1.4"/>
+
+  <text filter="url(#txtShadow)" class="math mono red l3" y="380">
+    <tspan x="365" text-anchor="end">= 1</tspan>
+    <tspan x="405" text-anchor="start">disaster / month</tspan>
+  </text>
+
+  <text filter="url(#txtShadow)" class="tag tagline" x="512" y="470" text-anchor="middle">Engineer long enough and everything happens.</text>
+</svg>

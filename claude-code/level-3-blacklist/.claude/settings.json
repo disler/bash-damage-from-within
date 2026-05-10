@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "statusLine": {
+    "type": "command",
+    "command": "uv run ../../.claude/status_lines/minimal.py",
+    "padding": 0
+  },
+  "permissions": {
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(rm -fr:*)",
+      "Bash(aws *)",
+      "Bash(gcloud *)",
+      "Bash(vercel *)",
+      "Bash(sudo *)",
+      "Read(./target/secrets.env)",
+      "mcp__ide__executeCode",
+      "mcp__ide__getDiagnostics"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/blacklist.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

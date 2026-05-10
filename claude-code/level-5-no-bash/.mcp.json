@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "safe-tools": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--script",
+        "./safe_tools_mcp.py"
+      ]
+    }
+  }
+}

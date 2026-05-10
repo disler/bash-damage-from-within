@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 576" width="1024" height="576" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="txtShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.6" result="thick"/>
+      <feGaussianBlur in="thick" stdDeviation="2.2" result="blur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.95" result="flood"/>
+      <feComposite in="flood" in2="blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <style><![CDATA[
+      .title { font-weight: 700; font-size: 30px; fill: #FFFFFF; letter-spacing: -0.5px; }
+      .axis  { font-size: 13px; fill: #FFFFFF; }
+      .axis-title { font-size: 14px; fill: #FFFFFF; font-weight: 500; }
+      .curve-label { font-size: 18px; font-weight: 700; }
+      .curve-sub   { font-size: 12px; fill: #FFFFFF; }
+
+      .grid { opacity: 0; animation: f 0.5s ease 0.3s forwards; }
+      .gline { opacity: 0; animation: f 0.4s ease forwards; }
+      .gl1 { animation-delay: 0.6s; } .gl2 { animation-delay: 0.9s; } .gl3 { animation-delay: 1.2s; }
+
+      .curve {
+        fill: none;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        animation: draw 2.4s cubic-bezier(.45,.05,.55,.95) 0.6s forwards;
+      }
+      .end-label { opacity: 0; animation: f 0.5s ease 3.0s forwards; }
+
+      @keyframes f { to { opacity: 1; } }
+      @keyframes draw { to { stroke-dashoffset: 0; } }
+    ]]></style>
+  </defs>
+  <text filter="url(#txtShadow)" class="title" x="512" y="58" text-anchor="middle">Capability Scales Both Ways</text>
+
+  <!-- Axes -->
+  <g stroke="#334155" stroke-width="1">
+    <line x1="140" y1="120" x2="140" y2="490"/>
+    <line x1="140" y1="490" x2="900" y2="490"/>
+  </g>
+
+  <!-- Subtle gridlines -->
+  <g class="grid" stroke="#1E293B" stroke-width="1" stroke-dasharray="2 4">
+    <line x1="140" y1="180" x2="900" y2="180"/>
+    <line x1="140" y1="240" x2="900" y2="240"/>
+    <line x1="140" y1="305" x2="900" y2="305"/>
+    <line x1="140" y1="370" x2="900" y2="370"/>
+    <line x1="140" y1="430" x2="900" y2="430"/>
+  </g>
+
+  <!-- Vertical milestone gridlines -->
+  <g stroke="#475569" stroke-width="1" stroke-dasharray="3 5">
+    <line class="gline gl1" x1="220" y1="120" x2="220" y2="490"/>
+    <line class="gline gl2" x1="480" y1="120" x2="480" y2="490"/>
+    <line class="gline gl3" x1="740" y1="120" x2="740" y2="490"/>
+  </g>
+
+  <!-- X axis labels -->
+  <text filter="url(#txtShadow)" class="axis gline gl1" x="220" y="513" text-anchor="middle">Today</text>
+  <text filter="url(#txtShadow)" class="axis gline gl2" x="480" y="513" text-anchor="middle">Mythos Class Models</text>
+  <text filter="url(#txtShadow)" class="axis gline gl3" x="740" y="513" text-anchor="middle">2028 Post Mythos Models</text>
+  <text filter="url(#txtShadow)" class="axis-title" x="512" y="548" text-anchor="middle">Model Capability</text>
+
+  <!-- Y axis label rotated -->
+  <text filter="url(#txtShadow)" class="axis-title" x="68" y="305" text-anchor="middle" transform="rotate(-90 68 305)">Magnitude</text>
+
+  <!-- Curves: meet near center-left, diverge.
+       Smooth bezier arcs with pathLength=1 so dasharray math is trivial. -->
+  <!-- Upside (green) arcing up to top-right -->
+  <path class="curve" pathLength="1" stroke="#10B981"
+        d="M150,310 C320,308 470,290 600,235 S780,130 820,118"/>
+  <!-- Downside (red) arcing down to bottom-right (mirror) -->
+  <path class="curve" pathLength="1" stroke="#EF4444"
+        d="M150,310 C320,318 470,340 600,395 S780,475 820,478"/>
+
+  <!-- End labels: positioned above/below curve endpoints, inside viewport -->
+  <g class="end-label">
+    <text filter="url(#txtShadow)" class="curve-label" x="838" y="115" fill="#10B981">Upside</text>
+    <text filter="url(#txtShadow)" class="curve-sub"   x="838" y="133">Productivity, scale, automation</text>
+  </g>
+  <g class="end-label">
+    <text filter="url(#txtShadow)" class="curve-label" x="838" y="478" fill="#EF4444">Downside</text>
+    <text filter="url(#txtShadow)" class="curve-sub"   x="838" y="496">Catastrophic risk, blast radius</text>
+  </g>
+</svg>

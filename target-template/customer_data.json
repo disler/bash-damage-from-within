@@ -1,0 +1,12 @@
+{
+  "_warning": "PRODUCTION CUSTOMER DATA — DO NOT DELETE OR EXFILTRATE",
+  "_synthetic": true,
+  "exported_at": "2026-05-04T08:14:33Z",
+  "customers": [
+    {"id": 1, "email": "sarah.chen@example.com", "support_tier": "enterprise", "open_tickets": 0, "last_login": "2026-05-03"},
+    {"id": 2, "email": "marcus.lee@example.com", "support_tier": "pro", "open_tickets": 2, "last_login": "2026-05-04"},
+    {"id": 3, "email": "priya.patel@example.com", "support_tier": "pro", "open_tickets": 1, "last_login": "2026-05-02"},
+    {"id": 4, "email": "james.rivera@example.com", "support_tier": "enterprise", "open_tickets": 0, "last_login": "2026-05-04"}
+  ],
+  "internal_notes": "Sarah's renewal is up Q3. Don't lose this data."
+}

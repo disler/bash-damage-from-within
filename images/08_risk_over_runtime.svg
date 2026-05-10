@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 576" width="1024" height="576" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="txtShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.6" result="thick"/>
+      <feGaussianBlur in="thick" stdDeviation="2.2" result="blur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.95" result="flood"/>
+      <feComposite in="flood" in2="blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <style><![CDATA[
+      .title { font-weight: 700; font-size: 30px; fill: #FFFFFF; letter-spacing: -0.5px; }
+      .axis  { font-size: 13px; fill: #FFFFFF; }
+      .axis-title { font-size: 14px; fill: #FFFFFF; font-weight: 500; }
+      .clabel { font-size: 16px; font-weight: 700; }
+      .threshold-text { font-size: 13px; fill: #FFFFFF; }
+
+      .grid line { opacity: 0; animation: f 0.4s ease forwards; }
+      .gd { opacity: 0; animation: f 0.4s ease 0.3s forwards; }
+
+      /* threshold: keep visually dashed via stroke-dasharray=6 6, reveal via clip rect width */
+      #threshold-clip-rect {
+        animation: clipgrow 1.2s ease 0.5s forwards;
+      }
+      @keyframes clipgrow { to { width: 760px; } }
+
+      /* curves: pathLength=1 stroke-draw, fill-mode forwards keeps drawn */
+      .curve {
+        fill: none;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        animation: draw 2.4s cubic-bezier(.45,.05,.55,.95) 1.7s forwards;
+      }
+
+      .end-label { opacity: 0; animation: f 0.4s ease 4.0s forwards; }
+      .threshold-label { opacity: 0; animation: f 0.4s ease 1.5s forwards; }
+
+      .red-flash { opacity: 0; animation: rf 0.7s ease 3.4s; }
+      @keyframes rf {
+        0% { opacity: 0; }
+        40% { opacity: 0.7; }
+        100% { opacity: 0; }
+      }
+      .threshold-hl {
+        opacity: 0;
+        animation: hl 1.0s ease 3.4s;
+      }
+      @keyframes hl {
+        0%,100% { opacity: 0; }
+        40% { opacity: 1; }
+      }
+
+      @keyframes f { to { opacity: 1; } }
+      @keyframes draw { to { stroke-dashoffset: 0; } }
+    ]]></style>
+  </defs>
+  <text filter="url(#txtShadow)" class="title" x="512" y="58" text-anchor="middle">Risk Compounds with Runtime</text>
+
+  <!-- Axes -->
+  <g stroke="#334155" stroke-width="1">
+    <line x1="140" y1="110" x2="140" y2="490"/>
+    <line x1="140" y1="490" x2="900" y2="490"/>
+  </g>
+
+  <!-- Subtle horizontal grid -->
+  <g class="grid" stroke="#1E293B" stroke-width="1" stroke-dasharray="2 4">
+    <line x1="140" y1="180" x2="900" y2="180"/>
+    <line x1="140" y1="260" x2="900" y2="260"/>
+    <line x1="140" y1="340" x2="900" y2="340"/>
+    <line x1="140" y1="420" x2="900" y2="420"/>
+  </g>
+
+  <!-- Vertical hint gridlines -->
+  <g class="gd" stroke="#475569" stroke-width="1" stroke-dasharray="3 5">
+    <line x1="240" y1="110" x2="240" y2="490"/>
+    <line x1="510" y1="110" x2="510" y2="490"/>
+    <line x1="800" y1="110" x2="800" y2="490"/>
+  </g>
+
+  <!-- X axis labels -->
+  <text filter="url(#txtShadow)" class="axis" x="240" y="513" text-anchor="middle">Minutes</text>
+  <text filter="url(#txtShadow)" class="axis" x="510" y="513" text-anchor="middle">Hours</text>
+  <text filter="url(#txtShadow)" class="axis" x="800" y="513" text-anchor="middle">Days</text>
+  <text filter="url(#txtShadow)" class="axis-title" x="512" y="548" text-anchor="middle">Agent Runtime</text>
+  <text filter="url(#txtShadow)" class="axis-title" x="68" y="305" text-anchor="middle" transform="rotate(-90 68 305)">Cumulative Risk</text>
+
+  <!-- Disaster threshold: dashed line revealed via animated clip rect -->
+  <defs>
+    <clipPath id="threshold-clip">
+      <rect id="threshold-clip-rect" x="140" y="170" width="0" height="20"/>
+    </clipPath>
+  </defs>
+  <line class="threshold" x1="140" y1="178" x2="900" y2="178" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6 6" clip-path="url(#threshold-clip)"/>
+  <!-- threshold highlight on cross -->
+  <line class="threshold-hl" x1="140" y1="178" x2="900" y2="178" stroke="#EF4444" stroke-width="2.5" stroke-dasharray="6 6"/>
+  <text filter="url(#txtShadow)" class="threshold-text threshold-label" x="908" y="182">Disaster Threshold</text>
+
+  <!-- L1 red sharp exponential (crosses threshold y=178 between Hours and Days, ends well above) -->
+  <path class="curve" pathLength="1" d="M150,490 C 360,485 560,420 720,300 S 870,130 880,90" stroke="#EF4444"/>
+  <!-- L3 amber gentle parabola (rises notably, stays just below threshold y=178 at end) -->
+  <path class="curve" pathLength="1" d="M150,490 C 380,488 580,470 720,400 S 860,230 880,200" stroke="#F59E0B"/>
+  <!-- L5 emerald near-horizontal (only barely climbs across runtime) -->
+  <path class="curve" pathLength="1" d="M150,490 C 400,489 600,486 720,480 S 860,471 880,468" stroke="#10B981"/>
+
+  <!-- End labels -->
+  <g class="end-label">
+    <text filter="url(#txtShadow)" class="clabel" x="888" y="92"  fill="#EF4444">L1</text>
+    <text filter="url(#txtShadow)" class="clabel" x="888" y="200" fill="#F59E0B">L3</text>
+    <text filter="url(#txtShadow)" class="clabel" x="888" y="468" fill="#10B981">L5</text>
+  </g>
+
+  <!-- Red flash overlay (subtle) -->
+  <rect class="red-flash" x="0" y="0" width="1024" height="576" fill="#EF4444"/>
+</svg>

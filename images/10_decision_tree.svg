@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 576" width="1024" height="576" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="txtShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.6" result="thick"/>
+      <feGaussianBlur in="thick" stdDeviation="2.2" result="blur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.95" result="flood"/>
+      <feComposite in="flood" in2="blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <style><![CDATA[
+      .title { font-weight: 700; font-size: 30px; fill: #FFFFFF; letter-spacing: -0.5px; }
+      .qbox-text { font-size: 18px; fill: #FFFFFF; font-weight: 500; }
+      .term-text { font-size: 18px; fill: #FFFFFF; font-weight: 600; }
+      .yn        { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; fill: #FFFFFF; }
+
+      .root { opacity: 0; transform: translateY(-6px); animation: rise 0.5s ease 0.1s forwards; }
+
+      .branch { stroke-dasharray: 1; stroke-dashoffset: 1; }
+      .b-no  { animation: draw 0.6s ease 0.7s forwards; }
+      .b-yes { animation: draw 0.6s ease 1.0s forwards; }
+      .lab-no, .lab-yes { opacity: 0; animation: f 0.4s ease forwards; }
+      .lab-no  { animation-delay: 0.95s; }
+      .lab-yes { animation-delay: 1.25s; }
+
+      .term-l2  { opacity: 0; transform: scale(.85); transform-box: fill-box; transform-origin: center; animation: glowpop 0.55s cubic-bezier(.2,.9,.3,1.4) 1.4s forwards, gPulse 1.6s ease-in-out 2.05s 1; }
+      .term-l4m { opacity: 0; transform: scale(.85); transform-box: fill-box; transform-origin: center; animation: ampop 0.55s cubic-bezier(.2,.9,.3,1.4) 1.7s forwards, aPulse 1.6s ease-in-out 2.35s 1; }
+
+      @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+      @keyframes draw { to { stroke-dashoffset: 0; } }
+      @keyframes f    { to { opacity: 1; } }
+      @keyframes glowpop {
+        0%   { opacity: 0; transform: scale(.85); }
+        60%  { opacity: 1; transform: scale(1.05); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+      @keyframes ampop {
+        0%   { opacity: 0; transform: scale(.85); }
+        60%  { opacity: 1; transform: scale(1.05); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+      @keyframes gPulse {
+        0%,100% { filter: drop-shadow(0 0 2px rgba(16,185,129,.2)); }
+        50%     { filter: drop-shadow(0 0 14px rgba(16,185,129,.85)); }
+      }
+      @keyframes aPulse {
+        0%,100% { filter: drop-shadow(0 0 2px rgba(245,158,11,.2)); }
+        50%     { filter: drop-shadow(0 0 14px rgba(245,158,11,.85)); }
+      }
+    ]]></style>
+  </defs>
+  <text filter="url(#txtShadow)" class="title" x="512" y="64" text-anchor="middle">Pick Your Level</text>
+
+  <!-- Root question (centered top) -->
+  <g class="root">
+    <rect x="356" y="140" width="312" height="68" rx="12" fill="#0F172A" stroke="#E2E8F0" stroke-width="1.4"/>
+    <text filter="url(#txtShadow)" class="qbox-text" x="512" y="182" text-anchor="middle">Production assets reachable?</text>
+  </g>
+
+  <!-- Branch No (left) — root bottom-center to L2 box top-center -->
+  <path class="branch b-no" pathLength="1" d="M450,208 L280,360" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <text filter="url(#txtShadow)" class="yn lab-no" x="332" y="288" text-anchor="middle">No</text>
+
+  <!-- Branch Yes (right) — root bottom-center to L4 min box top-center -->
+  <path class="branch b-yes" pathLength="1" d="M574,208 L744,360" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <text filter="url(#txtShadow)" class="yn lab-yes" x="692" y="288" text-anchor="middle">Yes</text>
+
+  <!-- L2 terminal (left, emerald) -->
+  <g class="term-l2">
+    <rect x="140" y="360" width="280" height="68" rx="12" fill="#0F172A" stroke="#10B981" stroke-width="1.8"/>
+    <text filter="url(#txtShadow)" class="term-text" x="280" y="402" text-anchor="middle">L2  System Prompt OK</text>
+  </g>
+
+  <!-- L4 minimum terminal (right, amber) -->
+  <g class="term-l4m">
+    <rect x="604" y="360" width="280" height="68" rx="12" fill="#0F172A" stroke="#F59E0B" stroke-width="1.8"/>
+    <text filter="url(#txtShadow)" class="term-text" x="744" y="402" text-anchor="middle">L4 minimum</text>
+  </g>
+</svg>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 576" width="1024" height="576" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="txtShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.6" result="thick"/>
+      <feGaussianBlur in="thick" stdDeviation="2.2" result="blur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.95" result="flood"/>
+      <feComposite in="flood" in2="blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <marker id="arr-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/>
+    </marker>
+    <marker id="arr-w2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#FFFFFF"/>
+    </marker>
+    <filter id="db-glow"><feGaussianBlur stdDeviation="6"/></filter>
+    <style><![CDATA[
+      .title { font-weight: 700; font-size: 30px; fill: #FFFFFF; letter-spacing: -0.5px; }
+      .col-h { font-weight: 600; font-size: 22px; }
+      .agent-text { font-size: 18px; fill: #FFFFFF; font-weight: 500; }
+      .db-text    { font-size: 18px; fill: #EF4444; font-weight: 600; }
+      .caption    { font-size: 13px; fill: #FFFFFF; }
+      .x-mark { font-family: 'JetBrains Mono'; font-size: 28px; font-weight: 700; fill: #EF4444; }
+
+      .icon { opacity: 0; animation: f 0.4s ease forwards; }
+      .i1 { animation-delay: 0.20s; } .i2 { animation-delay: 0.45s; } .i3 { animation-delay: 0.70s; }
+      .left-arrow { stroke-dasharray: 120; stroke-dashoffset: 120; }
+      .la1 { animation: draw 0.4s ease 0.35s forwards; } .la2 { animation: draw 0.4s ease 0.60s forwards; } .la3 { animation: draw 0.4s ease 0.85s forwards; }
+      .x-pop { opacity: 0; transform: scale(.4); transform-box: fill-box; transform-origin: center; }
+      .x1 { animation: pop 0.35s cubic-bezier(.2,.9,.3,1.6) 0.55s forwards; }
+      .x2 { animation: pop 0.35s cubic-bezier(.2,.9,.3,1.6) 0.80s forwards; }
+      .x3 { animation: pop 0.35s cubic-bezier(.2,.9,.3,1.6) 1.05s forwards; }
+
+      .agent-box { opacity: 0; animation: f 0.5s ease 1.4s forwards; }
+      .down-arrow { stroke-dasharray: 80; stroke-dashoffset: 80; animation: draw 0.5s ease 1.85s forwards; }
+      .bash-call  { opacity: 0; animation: f 0.5s ease 2.4s forwards; }
+
+      /* Separate polygon arrowheads that fade in only when their line finishes
+         drawing. Avoids the SVG marker-end bug where the marker renders at the
+         path endpoint immediately, regardless of stroke-dashoffset. */
+      .head { opacity: 0; }
+      .h-la1 { animation: f 0.12s ease 0.75s forwards; }
+      .h-la2 { animation: f 0.12s ease 1.00s forwards; }
+      .h-la3 { animation: f 0.12s ease 1.25s forwards; }
+      .h-da  { animation: f 0.12s ease 2.35s forwards; }
+      .db-box { opacity: 0; transform: scale(.92); transform-box: fill-box; transform-origin: center; animation: pop 0.5s cubic-bezier(.2,.9,.3,1.3) 2.25s forwards; }
+      .db-pulse { animation: dbPulse 2.4s ease-in-out 2.8s infinite; transform-box: fill-box; transform-origin: center; }
+      .crack { opacity: 0; animation: f 0.4s ease forwards; }
+      .cr1 { animation-delay: 2.55s; } .cr2 { animation-delay: 2.65s; } .cr3 { animation-delay: 2.75s; } .cr4 { animation-delay: 2.85s; } .cr5 { animation-delay: 2.65s; }
+
+      @keyframes f { to { opacity: 1; } }
+      @keyframes draw { to { stroke-dashoffset: 0; } }
+      @keyframes pop { to { opacity: 1; transform: scale(1); } }
+      @keyframes dbPulse {
+        0%,100% { filter: drop-shadow(0 0 6px rgba(239,68,68,.4)); }
+        50%     { filter: drop-shadow(0 0 18px rgba(239,68,68,.95)); }
+      }
+    ]]></style>
+  </defs>
+  <text filter="url(#txtShadow)" class="title" x="512" y="58" text-anchor="middle">Where the Damage Comes From</text>
+
+  <!-- Divider -->
+  <line x1="512" y1="100" x2="512" y2="540" stroke="#334155" stroke-width="1"/>
+
+  <!-- LEFT: Outside -->
+  <text filter="url(#txtShadow)" class="col-h" x="256" y="118" text-anchor="middle" fill="#FFFFFF">Outside</text>
+
+  <!-- Hooded hacker: hood + shoulders + face void -->
+  <g class="icon i1" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <!-- hood outline -->
+    <path d="M115,210 Q115,160 145,160 Q175,160 175,210 Z"/>
+    <!-- face shadow rect -->
+    <path d="M127,193 Q145,205 163,193 L160,210 Q145,217 130,210 Z" fill="#0A0E1A"/>
+    <!-- shoulders -->
+    <path d="M105,232 Q120,212 145,212 Q170,212 185,232"/>
+    <!-- glowing eyes -->
+    <circle cx="137" cy="200" r="2.2" fill="#EF4444" stroke="none"/>
+    <circle cx="153" cy="200" r="2.2" fill="#EF4444" stroke="none"/>
+  </g>
+  <line class="left-arrow la1" x1="200" y1="195" x2="305" y2="195" stroke="#94A3B8" stroke-width="1.6"/>
+  <polygon class="head h-la1" points="305,195 299,192 299,198" fill="#94A3B8"/>
+  <text filter="url(#txtShadow)" class="x-mark x-pop x1" x="345" y="205" text-anchor="middle">×</text>
+
+  <!-- Syringe: barrel + plunger + needle + droplet -->
+  <g class="icon i2" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <!-- plunger handle (left disc + rod) -->
+    <line x1="100" y1="280" x2="100" y2="310"/>
+    <line x1="100" y1="295" x2="115" y2="295"/>
+    <!-- barrel -->
+    <rect x="115" y="283" width="55" height="24" rx="2"/>
+    <!-- graduation ticks -->
+    <line x1="128" y1="287" x2="128" y2="293" stroke-width="1"/>
+    <line x1="140" y1="287" x2="140" y2="293" stroke-width="1"/>
+    <line x1="152" y1="287" x2="152" y2="293" stroke-width="1"/>
+    <!-- finger flange -->
+    <line x1="170" y1="278" x2="170" y2="312"/>
+    <!-- needle -->
+    <line x1="170" y1="295" x2="195" y2="295" stroke-width="2"/>
+    <!-- droplet -->
+    <path d="M198,290 Q201,295 198,300 Q195,295 198,290 Z" fill="#EF4444" stroke="none"/>
+  </g>
+  <line class="left-arrow la2" x1="205" y1="295" x2="305" y2="295" stroke="#94A3B8" stroke-width="1.6"/>
+  <polygon class="head h-la2" points="305,295 299,292 299,298" fill="#94A3B8"/>
+  <text filter="url(#txtShadow)" class="x-mark x-pop x2" x="345" y="305" text-anchor="middle">×</text>
+
+  <!-- Skull: cranium + jaw + teeth -->
+  <g class="icon i3" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <!-- cranium -->
+    <path d="M115,388 Q115,355 145,355 Q175,355 175,388 L175,402 L160,408 L155,418 L145,418 L135,418 L130,408 L115,402 Z"/>
+    <!-- eye sockets -->
+    <ellipse cx="132" cy="382" rx="6" ry="7" fill="#0A0E1A" stroke="#94A3B8" stroke-width="1.4"/>
+    <ellipse cx="158" cy="382" rx="6" ry="7" fill="#0A0E1A" stroke="#94A3B8" stroke-width="1.4"/>
+    <!-- nose -->
+    <path d="M145,393 L142,400 L148,400 Z" fill="#0A0E1A"/>
+    <!-- teeth -->
+    <line x1="138" y1="408" x2="138" y2="416" stroke-width="1.2"/>
+    <line x1="145" y1="408" x2="145" y2="418" stroke-width="1.2"/>
+    <line x1="152" y1="408" x2="152" y2="416" stroke-width="1.2"/>
+  </g>
+  <line class="left-arrow la3" x1="200" y1="385" x2="305" y2="385" stroke="#94A3B8" stroke-width="1.6"/>
+  <polygon class="head h-la3" points="305,385 299,382 299,388" fill="#94A3B8"/>
+  <text filter="url(#txtShadow)" class="x-mark x-pop x3" x="345" y="395" text-anchor="middle">×</text>
+
+  <text filter="url(#txtShadow)" class="caption" x="120" y="468">Hackers, prompt injection,</text>
+  <text filter="url(#txtShadow)" class="caption" x="120" y="486">external attacks</text>
+
+  <!-- RIGHT: Inside -->
+  <text filter="url(#txtShadow)" class="col-h" x="768" y="118" text-anchor="middle" fill="#EF4444">Inside</text>
+
+  <g class="agent-box">
+    <rect x="608" y="170" width="320" height="84" rx="12" fill="#0F172A" stroke="#FFFFFF" stroke-width="1.8"/>
+    <text filter="url(#txtShadow)" class="agent-text" x="768" y="220" text-anchor="middle">Your Agent</text>
+  </g>
+
+  <line class="down-arrow" x1="768" y1="270" x2="768" y2="340" stroke="#FFFFFF" stroke-width="2"/>
+  <polygon class="head h-da" points="768,340 764,334 772,334" fill="#FFFFFF"/>
+  <text filter="url(#txtShadow)" class="bash-call" x="785" y="312" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="15" font-weight="600" fill="#FFFFFF">A Single Bash() Call</text>
+
+  <g class="db-box">
+    <g class="db-pulse">
+      <rect x="608" y="356" width="320" height="84" rx="12" fill="#1A0A0E" stroke="#EF4444" stroke-width="2.4"/>
+      <!-- cracks (jagged polylines) -->
+      <path class="crack cr1" d="M640,358 L648,372 L640,384 L654,396 L646,412 L660,438" stroke="#EF4444" stroke-width="1.6" fill="none" stroke-linejoin="miter" stroke-linecap="round" opacity="0.85"/>
+      <path class="crack cr2" d="M896,360 L884,376 L894,390 L880,406 L892,420 L884,438" stroke="#EF4444" stroke-width="1.6" fill="none" stroke-linejoin="miter" stroke-linecap="round" opacity="0.85"/>
+      <path class="crack cr3" d="M680,358 L686,368 L678,378 L688,390" stroke="#EF4444" stroke-width="1.3" fill="none" stroke-linejoin="miter" opacity="0.75"/>
+      <path class="crack cr4" d="M848,438 L854,424 L846,412 L856,402" stroke="#EF4444" stroke-width="1.3" fill="none" stroke-linejoin="miter" opacity="0.75"/>
+      <path class="crack cr5" d="M720,440 L726,428 L718,418 L728,408" stroke="#EF4444" stroke-width="1.2" fill="none" stroke-linejoin="miter" opacity="0.7"/>
+      <text filter="url(#txtShadow)" class="db-text" x="768" y="406" text-anchor="middle">Production DB</text>
+    </g>
+  </g>
+</svg>

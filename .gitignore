@@ -1,0 +1,50 @@
+# Bash: Damage From Within — demo codebase
+# Note: target-template/secrets.env is intentionally committed and synthetic.
+# Real secrets must never be committed; the rules below enforce that.
+
+# ---- Environment / secrets ------------------------------------------------
+.env
+.env.local
+.env.*.local
+
+# ---- Transient demo state -------------------------------------------------
+# Each level's ./target/ is regenerated from target-template/ via setup-target.sh.
+# target-template/ IS committed (the source of truth for the demo).
+**/target/
+
+# ---- Python (hooks + MCP server + Agent SDK demo) -------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+
+# ---- uv ------------------------------------------------------------------
+.uv/
+
+# ---- Node / TypeScript (Pi extensions) ----------------------------------
+node_modules/
+*.tsbuildinfo
+
+# ---- OS ------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+# ---- Editors -------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- Deep docs (working notes, not part of the public surface) ----------
+deep_docs/
+
+# ---- Legacy images (pre-presentation set, kept for review) --------------
+legacy_images/

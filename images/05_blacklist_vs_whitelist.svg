@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 576" width="1024" height="576" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="txtShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.6" result="thick"/>
+      <feGaussianBlur in="thick" stdDeviation="2.2" result="blur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.95" result="flood"/>
+      <feComposite in="flood" in2="blur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <style><![CDATA[
+      .title { font-weight: 700; font-size: 30px; fill: #FFFFFF; letter-spacing: -0.5px; }
+      .col-h { font-weight: 600; font-size: 22px; fill: #FFFFFF; }
+      .caption { font-size: 13px; fill: #FFFFFF; }
+      .x-mark { font-family: 'JetBrains Mono'; font-size: 18px; font-weight: 700; fill: #EF4444; }
+      .q-mark { font-family: 'JetBrains Mono'; font-size: 16px; font-weight: 500; fill: #64748B; }
+      .check  { stroke: #10B981; stroke-width: 2.6; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+      .red-circle  { opacity: 0; transform: scale(.6); transform-box: fill-box; transform-origin: center; animation: pop 0.5s cubic-bezier(.2,.9,.3,1.4) 0.2s forwards; }
+      .x-pop { opacity: 0; transform: scale(.3); transform-box: fill-box; transform-origin: center; animation: pop 0.25s cubic-bezier(.2,.9,.3,1.6) forwards; }
+      .q-flutter { opacity: 0; animation: qIn 0.6s ease forwards; }
+
+      .green-circle { opacity: 0; transform: scale(.6); transform-box: fill-box; transform-origin: center; animation: pop 0.5s cubic-bezier(.2,.9,.3,1.4) 2.2s forwards; }
+      .check-pop { opacity: 0; transform: scale(.3); transform-box: fill-box; transform-origin: center; animation: pop 0.3s cubic-bezier(.2,.9,.3,1.6) forwards; }
+      .left-cap  { opacity: 0; animation: f 0.5s ease 2.0s forwards; }
+      .right-cap { opacity: 0; animation: f 0.5s ease 3.4s forwards; }
+
+      @keyframes pop { to { opacity: 1; transform: scale(1); } }
+      @keyframes f   { to { opacity: 1; } }
+      @keyframes qIn { 0% { opacity: 0; transform: translateY(-3px); } 60% { opacity: 0.7; } to { opacity: 0.7; transform: translateY(0); } }
+    ]]></style>
+  </defs>
+  <text filter="url(#txtShadow)" class="title" x="512" y="56" text-anchor="middle">Blacklist vs Whitelist</text>
+
+  <text filter="url(#txtShadow)" class="col-h" x="266" y="104" text-anchor="middle">Blacklist</text>
+  <text filter="url(#txtShadow)" class="col-h" x="758" y="104" text-anchor="middle">Whitelist</text>
+
+  <!-- Question marks scattered around blacklist (outside) -->
+  <g>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="80"  y="160" style="animation-delay: .9s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="120" y="125" style="animation-delay: 1.0s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="60"  y="240" style="animation-delay: 1.1s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="48"  y="320" style="animation-delay: 1.2s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="70"  y="400" style="animation-delay: 1.3s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="120" y="450" style="animation-delay: 1.4s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="200" y="475" style="animation-delay: 1.5s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="290" y="480" style="animation-delay: 1.6s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="380" y="475" style="animation-delay: 1.7s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="450" y="445" style="animation-delay: 1.8s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="475" y="380" style="animation-delay: 1.9s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="478" y="300" style="animation-delay: 1.0s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="470" y="220" style="animation-delay: 1.1s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="445" y="145" style="animation-delay: 1.2s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="380" y="120" style="animation-delay: 1.3s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="295" y="115" style="animation-delay: 1.4s">?</text>
+    <text filter="url(#txtShadow)" class="q-mark q-flutter" x="205" y="118" style="animation-delay: 1.5s">?</text>
+  </g>
+
+  <!-- Red blacklist circle -->
+  <g class="red-circle">
+    <circle cx="266" cy="296" r="148" fill="none" stroke="#EF4444" stroke-width="2.2"/>
+  </g>
+
+  <!-- 9x7 dense X grid inside red circle, rendered with stagger via inline delays -->
+  <g id="x-grid">
+    <!-- Generated rows: x positions roughly 180..352 step 22, y 220..372 step 22 -->
+    <!-- Row 1 -->
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="180" y="232" style="animation-delay:.5s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="202" y="232" style="animation-delay:.55s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="224" y="232" style="animation-delay:.60s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="246" y="232" style="animation-delay:.65s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="268" y="232" style="animation-delay:.70s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="290" y="232" style="animation-delay:.75s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="312" y="232" style="animation-delay:.80s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="334" y="232" style="animation-delay:.85s">×</text>
+    <!-- Row 2 -->
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="170" y="256" style="animation-delay:.60s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="192" y="256" style="animation-delay:.65s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="214" y="256" style="animation-delay:.70s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="236" y="256" style="animation-delay:.75s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="258" y="256" style="animation-delay:.80s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="280" y="256" style="animation-delay:.85s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="302" y="256" style="animation-delay:.90s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="324" y="256" style="animation-delay:.95s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="346" y="256" style="animation-delay:1.0s">×</text>
+    <!-- Row 3 -->
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="160" y="280" style="animation-delay:.70s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="182" y="280" style="animation-delay:.75s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="204" y="280" style="animation-delay:.80s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="226" y="280" style="animation-delay:.85s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="248" y="280" style="animation-delay:.90s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="270" y="280" style="animation-delay:.95s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="292" y="280" style="animation-delay:1.0s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="314" y="280" style="animation-delay:1.05s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="336" y="280" style="animation-delay:1.10s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="358" y="280" style="animation-delay:1.15s">×</text>
+    <!-- Row 4 -->
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="160" y="304" style="animation-delay:.80s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="182" y="304" style="animation-delay:.85s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="204" y="304" style="animation-delay:.90s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="226" y="304" style="animation-delay:.95s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="248" y="304" style="animation-delay:1.0s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="270" y="304" style="animation-delay:1.05s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="292" y="304" style="animation-delay:1.10s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="314" y="304" style="animation-delay:1.15s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="336" y="304" style="animation-delay:1.20s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="358" y="304" style="animation-delay:1.25s">×</text>
+    <!-- Row 5 -->
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="170" y="328" style="animation-delay:.90s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="192" y="328" style="animation-delay:.95s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="214" y="328" style="animation-delay:1.0s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="236" y="328" style="animation-delay:1.05s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="258" y="328" style="animation-delay:1.10s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="280" y="328" style="animation-delay:1.15s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="302" y="328" style="animation-delay:1.20s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="324" y="328" style="animation-delay:1.25s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="346" y="328" style="animation-delay:1.30s">×</text>
+    <!-- Row 6 -->
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="180" y="352" style="animation-delay:1.0s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="202" y="352" style="animation-delay:1.05s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="224" y="352" style="animation-delay:1.10s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="246" y="352" style="animation-delay:1.15s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="268" y="352" style="animation-delay:1.20s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="290" y="352" style="animation-delay:1.25s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="312" y="352" style="animation-delay:1.30s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="334" y="352" style="animation-delay:1.35s">×</text>
+    <!-- Row 7 -->
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="200" y="376" style="animation-delay:1.10s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="222" y="376" style="animation-delay:1.15s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="244" y="376" style="animation-delay:1.20s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="266" y="376" style="animation-delay:1.25s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="288" y="376" style="animation-delay:1.30s">×</text>
+    <text filter="url(#txtShadow)" class="x-mark x-pop" x="310" y="376" style="animation-delay:1.35s">×</text>
+  </g>
+
+  <text filter="url(#txtShadow)" class="caption left-cap" x="266" y="488" text-anchor="middle">Block known bad → infinite unknown bad</text>
+
+  <!-- Green whitelist -->
+  <g class="green-circle">
+    <circle cx="758" cy="296" r="148" fill="none" stroke="#10B981" stroke-width="2.2"/>
+  </g>
+  <!-- 3x3 checks centered on (758,296), spacing 50.
+       NOTE: outer <g transform="translate(...)"> positions; inner <g class="check-pop"> animates.
+       Two layers needed because CSS keyframe `transform: scale(1)` overrides any SVG transform attribute on the same element. -->
+  <g>
+    <g transform="translate(708,256)"><g class="check-pop" style="animation-delay:2.45s"><path class="check" d="M-9,0 L-2,8 L11,-8"/></g></g>
+    <g transform="translate(758,256)"><g class="check-pop" style="animation-delay:2.55s"><path class="check" d="M-9,0 L-2,8 L11,-8"/></g></g>
+    <g transform="translate(808,256)"><g class="check-pop" style="animation-delay:2.65s"><path class="check" d="M-9,0 L-2,8 L11,-8"/></g></g>
+    <g transform="translate(708,306)"><g class="check-pop" style="animation-delay:2.75s"><path class="check" d="M-9,0 L-2,8 L11,-8"/></g></g>
+    <g transform="translate(758,306)"><g class="check-pop" style="animation-delay:2.85s"><path class="check" d="M-9,0 L-2,8 L11,-8"/></g></g>
+    <g transform="translate(808,306)"><g class="check-pop" style="animation-delay:2.95s"><path class="check" d="M-9,0 L-2,8 L11,-8"/></g></g>
+    <g transform="translate(708,356)"><g class="check-pop" style="animation-delay:3.05s"><path class="check" d="M-9,0 L-2,8 L11,-8"/></g></g>
+    <g transform="translate(758,356)"><g class="check-pop" style="animation-delay:3.15s"><path class="check" d="M-9,0 L-2,8 L11,-8"/></g></g>
+    <g transform="translate(808,356)"><g class="check-pop" style="animation-delay:3.25s"><path class="check" d="M-9,0 L-2,8 L11,-8"/></g></g>
+  </g>
+
+  <text filter="url(#txtShadow)" class="caption right-cap" x="758" y="488" text-anchor="middle">Allow known good → bounded</text>
+</svg>
